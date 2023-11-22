@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import pyautogui
+import os
 
 BaseOptions = mp.tasks.BaseOptions
 GestureRecognizer = mp.tasks.vision.GestureRecognizer
@@ -10,9 +11,9 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 screen_width, screen_height = pyautogui.size()
 
-x=5
-print(type(x))
-x="ghhy"
+model_directory = os.path.dirname(os.path.abspath(__file__))
+model_path=f'{model_directory}\\gesture_recognizer.task'
+
 def handle_result(
     result: GestureRecognizerResult, output_image: mp.Image, timestamp_ms: int
 ):
@@ -30,15 +31,12 @@ def handle_result(
 
         if gesture == "Thumb_Up":
             pyautogui.scroll(200)
-            # pyautogui.sleep(1)
 
         if gesture == "Thumb_Down":
             pyautogui.scroll(-200)
-            # pyautogui.sleep(1)
 
         if gesture == "Victory":
             pyautogui.click()
-            # pyautogui.sleep(1)
 
         if gesture == "Closed_Fist":
             pyautogui.doubleClick()
@@ -47,7 +45,7 @@ def handle_result(
 
 options = GestureRecognizerOptions(
     base_options=BaseOptions(
-        model_asset_path= "C:\\Users\\m0258\\OneDrive\\שולחן העבודה\\mahat project\\AI\\gesture_recognizer.task"
+        model_asset_path= model_path
     ),
     running_mode=VisionRunningMode.LIVE_STREAM,
     result_callback=handle_result,
@@ -64,7 +62,7 @@ while True:
 
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
 
-    # # STEP 4: Recognize gestures in the input image.
+    # Recognize gestures in the input image.
     frame_timestamp_ms += 1
     recognition_result = recognizer.recognize_async(mp_image, frame_timestamp_ms)
 
