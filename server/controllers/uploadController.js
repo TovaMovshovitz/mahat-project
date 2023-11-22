@@ -1,7 +1,7 @@
 const fsPromises = require("fs").promises;
 const path = require("path");
 const { v4: uuid } = require("uuid");
-const upload = async (req, res) => {
+const upload = async (req, res, next) => {
   if (!req.file) {
     res.status(500).send("No file");
   }
@@ -13,10 +13,9 @@ const upload = async (req, res) => {
   try {
     await fsPromises.writeFile(fileUrl, req.file.buffer);
     return res.json({ location: fileUrl, name: filename });
-  } catch (err) {
-    res.status(500).send(err);
+  } catch (error) {
+    next(error);
   }
-
   res.send("test");
 };
 

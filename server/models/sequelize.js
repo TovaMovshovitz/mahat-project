@@ -18,6 +18,8 @@ console.log(dbConfig.HOST);
 //         }
 //     }
 // )
+
+//conect to docker continer
 const sequelize = new Sequelize("Recipes", "root", "123", {
   host: "localhost",
   port: 3306,

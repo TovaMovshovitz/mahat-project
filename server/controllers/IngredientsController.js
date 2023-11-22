@@ -1,46 +1,57 @@
 const IngredientsDal = require("../dal/IngredientsDal");
 
 class IngredientsController {
-  getAll = async (req, res) => {
-    const ans = await IngredientsDal.getAll();
+  getAll = async (req, res, next) => {
+    try {
+      const ans = await IngredientsDal.getAll();
 
-    if (!ans?.length) {
-      return res.status(400).json({ message: "No ingredients found" });
+      if (!ans?.length) {
+        return res.status(400).json({ message: "No ingredients found" });
+      }
+      res.json(ans);
+    } catch (error) {
+      next(error);
     }
-    res.json(ans);
   };
 
-  getOne = async (req, res) => {
+  getOne = async (req, res, next) => {
     const id = req.params.id;
+    try {
+      const ans = await IngredientsDal.getOne(id);
 
-    const ans = await IngredientsDal.getOne(id);
-
-    if (!ans) {
-      return res.status(400).json({ message: "No ingredient found" });
+      if (!ans) {
+        return res.status(400).json({ message: "No ingredient found" });
+      }
+      res.json(ans);
+    } catch (error) {
+      next(error);
     }
-    res.json(ans);
   };
 
-  create = async (req, res) => {
+  create = async (req, res, next) => {
     const { name, img } = req.body;
     if (!name) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const newIngredient = await IngredientsDal.create({ name, img });
+    try {
+      const newIngredient = await IngredientsDal.create({ name, img });
 
-    if (newIngredient) {
-      return res
-        .status(201)
-        .json({ message: "New ingredient created", data: newIngredient });
-    } else {
-      return res
-        .status(400)
-        .json({ message: "Invalid ingredient data received" });
+      if (newIngredient) {
+        return res
+          .status(201)
+          .json({ message: "New ingredient created", data: newIngredient });
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Invalid ingredient data received" });
+      }
+    } catch (error) {
+      next(error);
     }
   };
 
-  update = async (req, res) => {
+  update = async (req, res, next) => {
     const id = req.params.id;
     const { name, img } = req.body;
 
@@ -48,21 +59,29 @@ class IngredientsController {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const ans = await IngredientsDal.update(id, { name, img });
-    if (!ans) {
-      return res.status(400).json({ message: "ingredient not found" });
+    try {
+      const ans = await IngredientsDal.update(id, { name, img });
+      if (!ans) {
+        return res.status(400).json({ message: "ingredient not found" });
+      }
+      res.json0(ans);
+    } catch (error) {
+      next(error);
     }
-    res.json0(ans);
   };
 
-  deleteOne = async (req, res) => {
+  deleteOne = async (req, res, next) => {
     const id = req.params.id;
     if (!id) {
       return res.status(400).json({ message: "tag ID required" });
     }
-    await IngredientsDal.deleteOne(id);
+    try {
+      await IngredientsDal.deleteOne(id);
 
-    res.json(`ingredient  with ID ${id} deleted`);
+      res.json(`ingredient  with ID ${id} deleted`);
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

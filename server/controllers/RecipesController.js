@@ -1,21 +1,18 @@
-const db = require("../models/index");
-const { sequelize } = require("sequelize");
-
-const measuringUtensil = db.measuringUtensil;
-const ingredient = db.ingredient;
-const recipeIngredient = db.recipeIngredient;
 const RecipesDal = require("../dal/RecipesDal");
-const { Op } = require("sequelize");
 
 class RecipesController {
-  getAll = async (req, res) => {
-    const userId = 1; //req.user.id;
-    const ans = await RecipesDal.getAll(userId);
+  getAll = async (req, res, next) => {
+    const userId = req.user.id;
+    try {
+      const ans = await RecipesDal.getAll(userId);
 
-    if (!ans?.length) {
-      return res.status(400).json({ message: "No recipes found" });
+      if (!ans?.length) {
+        return res.status(400).json({ message: "No recipes found" });
+      }
+      res.json(ans);
+    } catch (error) {
+      next(error);
     }
-    res.json(ans);
   };
   genareteCleanRecipe = (singleRecipe) => {
     const cleanIngridients = singleRecipe.recipeIngredients.map((i) => ({
@@ -43,21 +40,25 @@ class RecipesController {
     };
   };
 
-  getOne = async (req, res) => {
+  getOne = async (req, res, next) => {
     const id = req.params.id;
-    const userId = 1; //req.user.id;
+    const userId = req.user.id;
 
-    const ans = await RecipesDal.getOne(id, userId);
+    try {
+      const ans = await RecipesDal.getOne(id, userId);
 
-    if (!ans) {
-      return res.status(400).json({ message: "No recipe found" });
+      if (!ans) {
+        return res.status(400).json({ message: "No recipe found" });
+      }
+      const cleanRecipe = this.genareteCleanRecipe(ans);
+      res.json(cleanRecipe);
+    } catch (error) {
+      next(error);
     }
-    const cleanRecipe = this.genareteCleanRecipe(ans);
-    res.json(cleanRecipe);
   };
 
-  create = async (req, res) => {
-    const userId = 1; //req.user.id;
+  create = async (req, res, next) => {
+    const userId = req.user.id;
     const {
       name,
       img,
@@ -70,38 +71,42 @@ class RecipesController {
       steps,
       ingredients,
     } = req.body;
-    console.log(name, preperingTime, difficult, serves);
     if (!name || !preperingTime || !difficult || !serves) {
       return res.status(400).json({ message: "All fields are required" });
     }
+    try {
+      const newRecipe = await RecipesDal.create(
+        {
+          userId,
+          name,
+          img,
+          preperingTime,
+          description,
+          difficult,
+          serves,
+          steps,
+        },
+        categories,
+        tags,
+        ingredients
+      );
 
-    const newRecipe = await RecipesDal.create(
-      {
-        userId,
-        name,
-        img,
-        preperingTime,
-        description,
-        difficult,
-        serves,
-        steps,
-      },
-      categories,
-      tags,
-      ingredients
-    );
-
-    if (newRecipe) {
-      return res
-        .status(201)
-        .json({ message: "New recipe created", data: newRecipe });
-    } else {
-      return res.status(400).json({ message: "Invalid recipe data received" });
+      if (newRecipe) {
+        return res
+          .status(201)
+          .json({ message: "New recipe created", data: newRecipe });
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Invalid recipe data received" });
+      }
+    } catch (error) {
+      next(error);
     }
   };
 
-  update = async (req, res) => {
-    const userId = 1; //req.user.id;
+  update = async (req, res, next) => {
+    const userId = req.user.id;
     const id = req.params.id;
     const {
       name,
@@ -118,38 +123,46 @@ class RecipesController {
     if (!name || !preperingTime || !difficult || !serves) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    const ans = await RecipesDal.update(
-      id,
-      {
-        userId,
-        name,
-        img,
-        preperingTime,
-        description,
-        difficult,
-        serves,
-        steps,
-      },
-      categories,
-      tags,
-      ingredients
-    );
+    try {
+      const ans = await RecipesDal.update(
+        id,
+        {
+          userId,
+          name,
+          img,
+          preperingTime,
+          description,
+          difficult,
+          serves,
+          steps,
+        },
+        categories,
+        tags,
+        ingredients
+      );
 
-    if (!ans) {
-      return res.status(400).json({ message: "recipe not edited" });
+      if (!ans) {
+        return res.status(400).json({ message: "recipe not edited" });
+      }
+      res.json(ans);
+    } catch (error) {
+      next(error);
     }
-    res.json(ans);
   };
 
-  deleteOne = async (req, res) => {
-    const userId = 1; //req.user.id;
+  deleteOne = async (req, res, next) => {
+    const userId = req.user.id;
     const id = req.params.id;
     if (!id) {
       return res.status(400).json({ message: "ID required" });
     }
-    await RecipesDal.deleteOne(id, userId);
+    try {
+      await RecipesDal.deleteOne(id, userId);
 
-    res.json(`recipe  with ID ${id} deleted`);
+      res.json(`recipe  with ID ${id} deleted`);
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

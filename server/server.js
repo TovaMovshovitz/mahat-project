@@ -22,7 +22,6 @@ app.use("/api/ingredient", require("./routes/ingredientRoutes"));
 app.use("/api/measuringUtensil", require("./routes/measuringUtensilRoutes"));
 app.use("/api/step", require("./routes/stepRoutes"));
 app.use("/api/recipe", require("./routes/recipeRoutes"));
-// app.use("/api/recipe", require("./routes/searchRecipeRoutes"));//search recipe
 app.use("/api/upload", require("./routes/uploadRoutes"));
 
 app.all("*", (req, res) => {
@@ -34,5 +33,5 @@ app.all("*", (req, res) => {
   }
 });
 
-// app.use(require("./middleware/errorHandler"));
+app.use(require("./middleware/errorHandler"));
 app.listen(PORT, () => console.log("server runing"));

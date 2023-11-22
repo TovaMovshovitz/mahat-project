@@ -51,7 +51,6 @@ const SearchRecipe = ({ src }) => {
 
   useEffect(() => {
     fetchData();
-
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [where, page, itemsPerPage, src]);
 
@@ -65,10 +64,19 @@ const SearchRecipe = ({ src }) => {
 
   const fetchData = async () => {
     let url;
-    debugger
-    if (src == "spoonacular") url = generateSpoonacularUrl();
-    else url = generateApiUrl();
-    const ans = await axios.get(url);
+    let ans;
+    if (src == "spoonacular"){
+      url = generateSpoonacularUrl();
+      ans = await axios.get(url);
+    } 
+    else {
+      url = generateApiUrl();
+      let config = {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      };
+      ans = await axios.get(url,config);
+    }
+    
     if (src == "spoonacular") {
       setRecipes(ans.data.results);
       setTotalPagegs(Math.ceil(ans.data.totalResults / itemsPerPage));
@@ -82,10 +90,10 @@ const SearchRecipe = ({ src }) => {
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
     };
     const ans = await axios.delete(
-      `http://localhost:3600/api/recipe/${recipeId}`
+      `http://localhost:3600/api/recipe/${recipeId}`,
+      config
     );
-    fetchData();
-    navigate("/Api/Search");
+    navigate("/myRecipes");
   };
 
   return (

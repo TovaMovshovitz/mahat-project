@@ -1,15 +1,29 @@
 import React from "react";
-import SimCardDownloadRoundedIcon from "@mui/icons-material/SimCardDownloadRounded";
 import PrintRoundedIcon from "@mui/icons-material/PrintRounded";
-import ShareIcon from "@mui/icons-material/Share";
-import MailRoundedIcon from "@mui/icons-material/MailRounded";
 import { Box, IconButton } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-function LeftButtons({ recipe }) {
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import Dialog from "@mui/material/Dialog";
+import { useNavigate } from "react-router-dom";
+
+function LeftButtons({ recipe, src }) {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const style = {
+    zIndex: 2,
+    borderRadius: "50%",
+    bottom: 45,
+    backgroundColor: "#ba8786",
+    mb:1,
+    color: "#ffffff",
+    ":hover": {
+      backgroundColor: "#6f6f6f",
+    },
+  };
 
   const handleClose = (event, reason) => {
     setOpen(false);
@@ -27,8 +41,15 @@ function LeftButtons({ recipe }) {
         top: "330px",
       }}
     >
-   
-      <IconButton
+      {src=="api" && <IconButton sx={style}
+        onClick={(event) => {
+          navigate(`/editRecipe?recipeId=${recipe.id}`);
+        }}
+      >
+        <ModeEditIcon/>
+      </IconButton>}
+      
+      <IconButton sx={style}
         onClick={() => {
           var textField = document.createElement("textarea");
           textField.innerText =
@@ -42,7 +63,7 @@ function LeftButtons({ recipe }) {
       >
         <ContentCopyIcon />
       </IconButton>
-      <IconButton
+      <IconButton sx={style}
         onClick={() => {
           window.print();
         }}

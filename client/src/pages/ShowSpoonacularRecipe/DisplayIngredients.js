@@ -51,13 +51,15 @@ const DisplayIngredients = ({ ingredients }) => {
       <Typography variant="h4">Ingredients:</Typography>
       <Box
         sx={{
+          marginRight: "auto",
+          marginLeft: "auto",
           textAlign: "left",
           boxShadow: 1,
           borderRadius: 2,
           backgroundColor: "#E5D3D3",
           maxWidth: 1200,
-          margin: 5,
-          padding: 7,
+          margin: { xs: 1, sm: 5, md: 7 },
+          p: { xs: 1, sm: 5, md: 7 },
         }}
       >
         {ingredients?.map((ingredient) => (

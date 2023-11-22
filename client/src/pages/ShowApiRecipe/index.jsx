@@ -17,8 +17,12 @@ function ShowApiRecipe() {
 
   useEffect(() => {
     async function fetchData(recipeId) {
+      let config = {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      };
       const ans = await axios.get(
-        `http://localhost:3600/api/recipe/${recipeId}`
+        `http://localhost:3600/api/recipe/${recipeId}`,
+        config
       );
       if (ans.data) {
         setRecipe(ans.data);
@@ -29,7 +33,7 @@ function ShowApiRecipe() {
 
   return (
     <>
-      <LeftButtons recipe={recipe} />
+      <LeftButtons recipe={recipe} src="api" />
       <Paper elevation={0} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         <Typography variant="h3">{recipe?.name}</Typography>
         <Typography variant="h11">{recipe?.description}</Typography>

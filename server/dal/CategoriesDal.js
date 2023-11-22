@@ -2,7 +2,7 @@ const db = require("../models/index");
 const category = db.category;
 
 class CategoriesDal {
-  getAll = async (req, res) => {
+  getAll = async (req, res, next) => {
     return await category.findAll();
   };
 

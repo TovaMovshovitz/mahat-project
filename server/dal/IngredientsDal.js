@@ -2,7 +2,7 @@ const db = require("../models/index");
 const ingredient = db.ingredient;
 
 class IngredientsDal {
-  getAll = async (req, res) => {
+  getAll = async (req, res, next) => {
     return ingredient.findAll();
   };
 

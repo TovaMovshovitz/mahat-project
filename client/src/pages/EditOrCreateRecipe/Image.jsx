@@ -51,9 +51,7 @@ function Image({ recipe, setRecipe }) {
           <br></br>
           <Button
             onClick={(selectedImage) => {
-              debugger;
               setSelectedImage(null);
-              debugger;
             }}
           >
             replace

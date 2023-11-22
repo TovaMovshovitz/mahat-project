@@ -10,7 +10,9 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 screen_width, screen_height = pyautogui.size()
 
-
+x=5
+print(type(x))
+x="ghhy"
 def handle_result(
     result: GestureRecognizerResult, output_image: mp.Image, timestamp_ms: int
 ):
@@ -45,7 +47,7 @@ def handle_result(
 
 options = GestureRecognizerOptions(
     base_options=BaseOptions(
-        model_asset_path="C:\\Users\\m0258\\Downloads\\gesture_recognizer.task"
+        model_asset_path= "C:\\Users\\m0258\\OneDrive\\שולחן העבודה\\mahat project\\AI\\gesture_recognizer.task"
     ),
     running_mode=VisionRunningMode.LIVE_STREAM,
     result_callback=handle_result,

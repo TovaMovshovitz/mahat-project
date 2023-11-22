@@ -1,67 +1,87 @@
 const CategoriesDal = require("../dal/CategoriesDal");
 
 class CategoriesController {
-  getAll = async (req, res) => {
-    const categorys = await CategoriesDal.getAll();
+  getAll = async (req, res, next) => {
+    try {
+      const categorys = await CategoriesDal.getAll();
 
-    if (!categorys?.length) {
-      return res.status(400).json({ message: "No categorys found" });
+      if (!categorys?.length) {
+        return res.status(400).json({ message: "No categorys found" });
+      }
+      res.json(categorys);
+    } catch (error) {
+      next(error);
     }
-    res.json(categorys);
   };
 
-  getOne = async (req, res) => {
+  getOne = async (req, res, next) => {
     const id = req.params.id;
 
-    const ans = await CategoriesDal.getOne(id);
+    try {
+      const ans = await CategoriesDal.getOne(id);
 
-    if (!ans) {
-      return res.status(400).json({ message: "No category found" });
+      if (!ans) {
+        return res.status(400).json({ message: "No category found" });
+      }
+      res.json(ans);
+    } catch (error) {
+      next(error);
     }
-    res.json(ans);
   };
 
-  create = async (req, res) => {
+  create = async (req, res, next) => {
     const { name } = req.body;
     if (!name) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const newcategory = await CategoriesDal.create(name);
+    try {
+      const newcategory = await CategoriesDal.create(name);
 
-    if (newcategory) {
-      return res
-        .status(201)
-        .json({ message: "New category created", data: newcategory });
-    } else {
-      return res
-        .status(400)
-        .json({ message: "Invalid category data received" });
+      if (newcategory) {
+        return res
+          .status(201)
+          .json({ message: "New category created", data: newcategory });
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Invalid category data received" });
+      }
+    } catch (error) {
+      next(error);
     }
   };
 
-  update = async (req, res) => {
+  update = async (req, res, next) => {
     const id = req.params.id;
     const { name } = req.body;
 
     if (!id || !name) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    const ans = await CategoriesDal.update(id, name);
+    try {
+      const ans = await CategoriesDal.update(id, name);
 
-    if (!ans) {
-      return res.status(400).json({ message: "category not found" });
+      if (!ans) {
+        return res.status(400).json({ message: "category not found" });
+      }
+      res.json(ans);
+    } catch (error) {
+      next(error);
     }
-    res.json(ans);
   };
 
-  deleteOne = async (req, res) => {
+  deleteOne = async (req, res, next) => {
     const id = req.params.id;
     if (!id) {
       return res.status(400).json({ message: "tag ID required" });
     }
-    await CategoriesDal.deleteOne(id);
-    res.json(`category  with ID ${id} deleted`);
+    try {
+      await CategoriesDal.deleteOne(id);
+      res.json(`category  with ID ${id} deleted`);
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

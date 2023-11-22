@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { Paper, Typography, Container, Divider, Box } from "@mui/material";
 import axios from "axios";
 import DisplayTags from "./DisplayTags";
@@ -51,16 +50,22 @@ function ShowSpoonacularRecipe() {
     <>
       <LeftButtons recipe={recipe} />
       <Paper elevation={0} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-        <Typography variant="h3" sx={{ m: 2 }}>
-          {recipe?.title}
-        </Typography>
-
-        <Typography variant="h11" sx={{ m: 2 }}>
-          {htmlParser(recipe?.summary)}
-        </Typography>
+        <Box sx={{ width: { xs: "80%", sm: "70%", md: "60%" } }}>
+          {" "}
+          <Typography variant="h3" style={{ fontFamily: '"Handlee", cursive', color: "#ba8786", marginBottom:10}}>
+            {recipe?.title}
+          </Typography>
+          <Typography variant="h11">
+            {htmlParser(recipe?.summary)}
+          </Typography>
+        </Box>
         <br />
-
-        <img src={recipe?.image} sx={{ width: 500 }}></img>
+        <Box sx={{ width: { xs: "90%", sm: "60%", md: "50%" } }}>
+          <img
+            src={recipe?.image}
+            style={{ marginTop: 20, width: "100%" }}
+          ></img>
+        </Box>
         <Details recipe={recipe}></Details>
         {recipe.extendedIngredients?.length > 0 && (
           <DisplayIngredients

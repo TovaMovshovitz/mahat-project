@@ -37,8 +37,12 @@ function EditOrCreateRecipe({ action }) {
 
   useEffect(() => {
     async function fetchData(recipeId) {
+      let config = {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      };
       const { data: recipeToEdit } = await axios.get(
-        `http://localhost:3600/api/recipe/${recipeId}`
+        `http://localhost:3600/api/recipe/${recipeId}`,
+        config
       );
 
       if (recipeToEdit) {
@@ -90,7 +94,8 @@ function EditOrCreateRecipe({ action }) {
     recipe.img = image;
     const newRecipe = await axios.post(
       "http://localhost:3600/api/recipe",
-      recipe
+      recipe,
+      config
     );
     navigate(`/Api/show?recipeId=${newRecipe?.data?.data?.id}`);
   };
@@ -99,11 +104,15 @@ function EditOrCreateRecipe({ action }) {
     let config = {
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
     };
+    console.log(recipe);
+    debugger
     const editedRecipe = await axios.put(
       `http://localhost:3600/api/recipe/${recipe.id}`,
-      recipe
+      recipe,
+      config
     );
-    alert(editedRecipe?.id);
+    debugger
+    //alert(editedRecipe?.id);
     navigate(`/Api/show?recipeId=${editedRecipe?.data?.id}`);
   };
 

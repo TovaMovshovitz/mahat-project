@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Card, Divider, Typography, AspectRatio } from "@mui/material";
 import ApiCard from "./ApiCard";
-import SpoonacularCard from "./SpoonacularCard";
 import { useNavigate } from "react-router-dom";
 
 const RecipeCard = ({ recipe, src, deleteRecipe }) => {

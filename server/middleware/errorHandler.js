@@ -1,6 +1,5 @@
-const errorHandler = (err, req, res, next) => {
-  // res.status(500).json({ error: 'Internal Server Error' }); // Send an error response
-  throw new Error(err);
+const handleErrors = (err, req, res, next) => {
+  res.status(500).send("Something went wrong!");
 };
 
-module.exports = errorHandler;
+module.exports = handleErrors;

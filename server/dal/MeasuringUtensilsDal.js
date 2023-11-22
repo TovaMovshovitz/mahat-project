@@ -2,7 +2,7 @@ const db = require("../models/index");
 const measuringUtensil = db.measuringUtensil;
 
 class MeasuringUtensilsDal {
-  getAll = async (req, res) => {
+  getAll = async (req, res, next) => {
     return await measuringUtensil.findAll();
   };
 

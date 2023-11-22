@@ -56,8 +56,7 @@ class RecipesDal {
     );
     ingredients?.map((x) => (x.recipeId = createdRecipe.id));
     if (ingredients?.length > 0) await recipeIngredient.bulkCreate(ingredients);
-    return createdRecipe; // await this.getOne(createdRecipe.id, createdRecipe.userId);
-    // });
+    return createdRecipe;
   };
 
   update = async (id, recipeToUpdate, categories, tags, ingredients) => {
