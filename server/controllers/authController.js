@@ -44,6 +44,10 @@ const login = async (req, res, next) => {
     if (!foundUser) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    const passwordMatch = await bcrypt.compare(password, foundUser.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
     const userInfo = {
       id: foundUser.id,
       email: foundUser.email,

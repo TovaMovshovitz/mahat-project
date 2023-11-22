@@ -20,7 +20,6 @@ app.use("/api/tag", require("./routes/tagRoutes"));
 app.use("/api/category", require("./routes/categoryRoutes"));
 app.use("/api/ingredient", require("./routes/ingredientRoutes"));
 app.use("/api/measuringUtensil", require("./routes/measuringUtensilRoutes"));
-app.use("/api/step", require("./routes/stepRoutes"));
 app.use("/api/recipe", require("./routes/recipeRoutes"));
 app.use("/api/upload", require("./routes/uploadRoutes"));
 
