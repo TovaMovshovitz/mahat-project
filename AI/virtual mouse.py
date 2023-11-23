@@ -1,7 +1,8 @@
+import os
+
 import cv2
 import mediapipe as mp
 import pyautogui
-import os
 
 BaseOptions = mp.tasks.BaseOptions
 GestureRecognizer = mp.tasks.vision.GestureRecognizer
@@ -12,7 +13,9 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 screen_width, screen_height = pyautogui.size()
 
 model_directory = os.path.dirname(os.path.abspath(__file__))
-model_path=f'{model_directory}\\gesture_recognizer.task'
+model_name = "gesture_recognizer.task"
+model_path = os.path.join(model_directory, model_name)
+
 
 def handle_result(
     result: GestureRecognizerResult, output_image: mp.Image, timestamp_ms: int
@@ -38,14 +41,11 @@ def handle_result(
         if gesture == "Victory":
             pyautogui.click()
 
-        if gesture == "Closed_Fist":
-            pyautogui.doubleClick()
-            pyautogui.sleep(1)
 
 
 options = GestureRecognizerOptions(
     base_options=BaseOptions(
-        model_asset_path= model_path
+        model_asset_path="C:\\Users\\m0258\\Downloads\\gesture_recognizer.task"  # model_path
     ),
     running_mode=VisionRunningMode.LIVE_STREAM,
     result_callback=handle_result,
@@ -67,4 +67,9 @@ while True:
     recognition_result = recognizer.recognize_async(mp_image, frame_timestamp_ms)
 
     cv2.imshow("Virtual Mouse", frame)
-    cv2.waitKey(100)
+    waitKey=cv2.waitKey(100)
+    if waitKey== ord('q'):
+    		break
+
+cap.release()
+cv2.destroyAllWindows()
