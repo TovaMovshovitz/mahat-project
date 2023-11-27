@@ -12,7 +12,7 @@ import ShowSpoonacularRecipe from "./pages/ShowSpoonacularRecipe";
 import ShowApiRecipe from "./pages/ShowApiRecipe";
 import Footer  from "./components/footer";
 import MyRecipes from "./pages/myRecipes";
-
+import VirtualMouse from "./pages/VirtualMouse";
 const theme = createTheme({
   palette: {
     primary: {
@@ -38,6 +38,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/myRecipes" element={<MyRecipes />} />
+              <Route path="/VirtualMouse" element={<VirtualMouse />} />
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />

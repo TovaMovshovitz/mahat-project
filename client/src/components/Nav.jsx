@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { CgAddR } from "react-icons/cg";
 import { BsSearch } from "react-icons/bs";
 import { GiCook } from "react-icons/gi";
-import { AiOutlineUser } from "react-icons/ai";
+import { RiMouseLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../context/authContext";
@@ -103,6 +103,17 @@ export default function Nav() {
           <MenuItem>
             <Button
               onClick={() => {
+                navigate("/virtualMouse");
+                handleMobileMenuClose();
+              }}
+            >
+              <RiMouseLine style={{ fontSize: 22 }} />
+              virtual mouse
+            </Button>
+          </MenuItem>
+          <MenuItem>
+            <Button
+              onClick={() => {
                 navigate("/spoonacular/Search");
                 handleMobileMenuClose();
               }}
@@ -111,6 +122,7 @@ export default function Nav() {
               Search
             </Button>
           </MenuItem>
+
           <MenuItem>
             <Button
               onClick={() => {
@@ -134,10 +146,7 @@ export default function Nav() {
             </Button>
           </MenuItem>
           <MenuItem>
-            <Button
-              onClick={() => {
-              }}
-            >
+            <Button onClick={() => {}}>
               Hi {currentUser.name} <Logout />
             </Button>
           </MenuItem>
@@ -195,6 +204,14 @@ export default function Nav() {
               <>
                 <Button
                   onClick={() => {
+                    navigate("/virtualMouse");
+                  }}
+                >
+                  <RiMouseLine style={{ fontSize: 25 }} />
+                  virtual mouse
+                </Button>
+                <Button
+                  onClick={() => {
                     navigate("/spoonacular/Search");
                   }}
                 >
@@ -209,6 +226,7 @@ export default function Nav() {
                   <CgAddR style={{ fontSize: 25 }} />
                   Create
                 </Button>
+
                 <Button
                   onClick={() => {
                     navigate("/myRecipes");
