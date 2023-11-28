@@ -20,7 +20,6 @@ const SearchRecipe = ({ src }) => {
     selectedDiets: [],
     selectedTypes: [],
     includeIngredients: [],
-    excludeIngredients: [],
     maxReadyTime: null,
   });
 
@@ -29,10 +28,6 @@ const SearchRecipe = ({ src }) => {
     url += `number=${itemsPerPage}&offset=${startIndex}&addRecipeInformation=true&`;
     if (where.name) url += `query=${where.name}&`;
     if (where.maxReadyTime) url += `maxReadyTime=${where.maxReadyTime}&`;
-    if (where.excludeIngredients.length > 0)
-      url += `excludeIngredients=${where.excludeIngredients
-        .map((o) => o.name)
-        .join(",")}&`;
     if (where.includeIngredients.length > 0)
       url += `includeIngredients=${where.includeIngredients
         .map((o) => o.name)
@@ -45,7 +40,18 @@ const SearchRecipe = ({ src }) => {
   };
 
   const generateApiUrl = () => {
-    let url = `http://localhost:3600/api/recipe/`;
+    let url = `http://localhost:3600/api/searchRecipe?`;
+    url += `limit=${itemsPerPage}&offset=${startIndex}&`;
+    if (where.name) url += `name=${where.name}&`;
+    if (where.maxReadyTime) url += `maxPrepTime=${where.maxReadyTime}&`;
+    if (where.includeIngredients.length > 0)
+      url += `withIngredients=${where.includeIngredients
+        .map((o) => o.id)
+        .join(",")}&`;
+    if (where.selectedDiets.length > 0)
+      url += `tags=${where.selectedDiets.map((o) => o.id).join(",")}&`;
+    if (where.selectedTypes.length > 0)
+      url += `cateogries=${where.selectedTypes.map((o) => o.id).join(",")}&`;
     return url;
   };
 
@@ -65,23 +71,23 @@ const SearchRecipe = ({ src }) => {
   const fetchData = async () => {
     let url;
     let ans;
-    if (src == "spoonacular"){
+    if (src == "spoonacular") {
       url = generateSpoonacularUrl();
       ans = await axios.get(url);
-    } 
-    else {
+    } else {
       url = generateApiUrl();
       let config = {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       };
-      ans = await axios.get(url,config);
+      ans = await axios.get(url, config);
     }
-    
+
     if (src == "spoonacular") {
       setRecipes(ans.data.results);
       setTotalPagegs(Math.ceil(ans.data.totalResults / itemsPerPage));
     } else {
-      setRecipes(ans.data);
+      setRecipes(ans.data.rows);
+      setTotalPagegs(Math.ceil(ans.data.count / itemsPerPage));
     }
   };
 
@@ -98,7 +104,8 @@ const SearchRecipe = ({ src }) => {
 
   return (
     <>
-      {src=="spoonacular" &&<Filters where={where} setWhere={setWhere} />}
+      <Filters where={where} setWhere={setWhere} />
+      {/* {src=="spoonacular" &&<Filters where={where} setWhere={setWhere} />} */}
       <RecipesGrid src={src} recipes={recipes} deleteRecipe={deleteRecipe} />
       <Pagination
         count={totalPages}

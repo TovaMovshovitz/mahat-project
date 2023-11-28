@@ -22,6 +22,8 @@ app.use("/api/ingredient", require("./routes/ingredientRoutes"));
 app.use("/api/measuringUtensil", require("./routes/measuringUtensilRoutes"));
 app.use("/api/recipe", require("./routes/recipeRoutes"));
 app.use("/api/upload", require("./routes/uploadRoutes"));
+app.use("/api/searchRecipe", require("./routes/searchRecipeRoutes"));
+
 
 app.all("*", (req, res) => {
   res.status(404);

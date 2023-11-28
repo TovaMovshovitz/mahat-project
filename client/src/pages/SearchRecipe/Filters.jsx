@@ -88,22 +88,7 @@ function Filters({ where, setWhere }) {
             setWhere({ ...where, includeIngredients: values });
           }}
         />
-        <Autocomplete
-          {...style}
-          options={ingredients}
-          getOptionLabel={(option) => option.name}
-          value={where.excludeIngredients}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="exclude Ingredients"
-              placeholder="exclude Ingredients"
-            />
-          )}
-          onChange={(event, values) => {
-            setWhere({ ...where, excludeIngredients: values });
-          }}
-        />
+
         <Autocomplete
           {...style}
           value={where.selectedDiets}
@@ -148,7 +133,6 @@ function Filters({ where, setWhere }) {
       </Stack>
 
       {(where.includeIngredients?.length != 0 ||
-        where.excludeIngredients?.length != 0 ||
         where.selectedTypes?.length != 0 ||
         where.selectedDiets?.length != 0) && (
         <Divider variant="middle" sx={{ padding: 2 }} />
@@ -164,13 +148,6 @@ function Filters({ where, setWhere }) {
         {where.includeIngredients?.length != 0 && (
           <SelectedFilter
             name="includeIngredients"
-            where={where}
-            setWhere={setWhere}
-          ></SelectedFilter>
-        )}
-        {where.excludeIngredients?.length != 0 && (
-          <SelectedFilter
-            name="excludeIngredients"
             where={where}
             setWhere={setWhere}
           ></SelectedFilter>
