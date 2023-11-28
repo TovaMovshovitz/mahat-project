@@ -4,8 +4,6 @@ import {
   Typography,
   ToggleButton,
   ToggleButtonGroup,
-  Stack,
-  FormGroup,
 } from "@mui/material";
 
 function ChooseCategories({ recipe, setRecipe }) {
@@ -36,31 +34,21 @@ function ChooseCategories({ recipe, setRecipe }) {
   return (
     <>
       <Typography variant="h6">categories:</Typography>
-      <ToggleButtonGroup
-        fullWidth
-        value={recipe.categories}
-        onChange={handleChange}
-        color="primary"
-      >
-        {/* <FormGroup
-          row
-          sx={{
-            "& .MuiTextField-root": {
-              display: "flex",
-              flexDirection: "row",
-            },
-          }}
-        > */}
-        {categoriesList.map((category) => (
-          <ToggleButton
-            sx={{ margin: "5px", height: "50px" }}
-            value={category.id}
-          >
-            {category.name}
-          </ToggleButton>
-        ))}
-        {/* </FormGroup> */}
-      </ToggleButtonGroup>
+      
+        <ToggleButtonGroup
+          value={recipe.categories}
+          onChange={handleChange}
+          color="primary"
+        >
+          {categoriesList.map((category) => (
+            <ToggleButton
+              sx={{ margin: "5px", height: "50px" }}
+              value={category.id}
+            >
+              {category.name}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
     </>
   );
 }

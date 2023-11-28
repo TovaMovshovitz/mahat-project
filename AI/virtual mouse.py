@@ -33,10 +33,10 @@ def handle_result(
                 pyautogui.moveTo(mouse_x, mouse_y, duration=0.1)
 
         if gesture == "Thumb_Up":
-            pyautogui.scroll(200)
+            pyautogui.scroll(80)
 
         if gesture == "Thumb_Down":
-            pyautogui.scroll(-200)
+            pyautogui.scroll(-80)
 
         if gesture == "Victory":
             pyautogui.click()
@@ -66,7 +66,7 @@ while True:
     recognition_result = recognizer.recognize_async(mp_image, frame_timestamp_ms)
 
     cv2.imshow("Virtual Mouse", frame)
-    waitKey = cv2.waitKey(100)
+    waitKey = cv2.waitKey(200)
     if waitKey == ord("q"):
         break
 
