@@ -10,7 +10,7 @@ const SearchRecipe = ({ src }) => {
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
   const [recipes, setRecipes] = useState([]);
-  const [noRecipes, setNoRecipes] = useState(true);
+  const [noRecipes, setNoRecipes] = useState(false);
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [totalPages, setTotalPagegs] = useState(1);
@@ -103,7 +103,7 @@ const SearchRecipe = ({ src }) => {
       `http://localhost:3600/api/recipe/${recipeId}`,
       config
     );
-    navigate("/myRecipes");
+    fetchData()
   };
 
   return (
@@ -116,7 +116,7 @@ const SearchRecipe = ({ src }) => {
           margin={5}
           style={{ color: "#ba8786" }}
         >
-          Ther is no recipes to display 😕 <br />
+          There is no recipes to display 😕 <br />
           <Button
             sx={{ margin: 5 }}
             variant="outlined"
