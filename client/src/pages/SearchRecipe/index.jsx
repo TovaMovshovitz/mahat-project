@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Pagination, Paper } from "@mui/material";
+import { Pagination, Typography, Button } from "@mui/material";
 import axios from "axios";
 import RecipesGrid from "../../components/RecipesGrid";
 import Filters from "./Filters";
@@ -10,7 +10,7 @@ const SearchRecipe = ({ src }) => {
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
   const [recipes, setRecipes] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+  const [noRecipes, setNoRecipes] = useState(true);
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [totalPages, setTotalPagegs] = useState(1);
@@ -85,9 +85,13 @@ const SearchRecipe = ({ src }) => {
     if (src == "spoonacular") {
       setRecipes(ans.data.results);
       setTotalPagegs(Math.ceil(ans.data.totalResults / itemsPerPage));
+      if (ans.data.totalResults > 0) setNoRecipes(false);
+      else setNoRecipes(true);
     } else {
       setRecipes(ans.data.rows);
       setTotalPagegs(Math.ceil(ans.data.count / itemsPerPage));
+      if (ans.data.count > 0) setNoRecipes(false);
+      else setNoRecipes(true);
     }
   };
 
@@ -105,15 +109,42 @@ const SearchRecipe = ({ src }) => {
   return (
     <>
       <Filters where={where} setWhere={setWhere} />
-      {/* {src=="spoonacular" &&<Filters where={where} setWhere={setWhere} />} */}
-      <RecipesGrid src={src} recipes={recipes} deleteRecipe={deleteRecipe} />
-      <Pagination
-        count={totalPages}
-        page={page}
-        onChange={(event, page) => {
-          setPage(page);
-        }}
-      />
+      {noRecipes && (
+        <Typography
+          variant="h4"
+          align="center"
+          margin={5}
+          style={{ color: "#ba8786" }}
+        >
+          Ther is no recipes to display 😕 <br />
+          <Button
+            sx={{ margin: 5 }}
+            variant="outlined"
+            onClick={() => {
+              navigate("/createRecipe");
+            }}
+          >
+            create new recipe
+          </Button>
+        </Typography>
+      )}
+
+      {!noRecipes && (
+        <>
+          <RecipesGrid
+            src={src}
+            recipes={recipes}
+            deleteRecipe={deleteRecipe}
+          />
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={(event, page) => {
+              setPage(page);
+            }}
+          />
+        </>
+      )}
     </>
   );
 };
