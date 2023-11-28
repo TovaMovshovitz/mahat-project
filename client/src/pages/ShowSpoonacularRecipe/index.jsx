@@ -10,7 +10,6 @@ import Details from "./Details";
 import { useLocation } from "react-router-dom";
 import htmlParser from "react-html-parser";
 import RecipesGrid from "../../components/RecipesGrid";
-// import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 function ShowSpoonacularRecipe() {
   const location = useLocation();

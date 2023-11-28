@@ -38,7 +38,14 @@ const Footer = () => {
 
   return (
     <footer
-      style={{ backgroundColor: "#f5f5f5", padding: "1rem", marginTop: "50px" }}
+      style={{
+        backgroundColor: "#f5f5f5",
+        padding: "1rem",
+        marginTop: "50px",
+        display: "flex",
+        minHeight: "10vh",
+        flexDirection: "column",
+      }}
     >
       <Container>
         <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -109,7 +116,7 @@ const Footer = () => {
             </Button>
           </Box>
         </Box>
-        <Copyright/>
+        <Copyright />
       </Container>
     </footer>
   );

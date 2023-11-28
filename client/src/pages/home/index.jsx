@@ -13,8 +13,9 @@ const Root = styled("div")(({ theme }) => ({
     marginTop: theme.spacing(2),
   },
 }));
-
 const Home = () => {
+ 
+
   return (
     <>
       <div
@@ -42,15 +43,28 @@ const Home = () => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3"
-            style={{ fontFamily: '"Handlee", cursive', color: "#ba8786" ,textAlign:"center", marginTop:"30px"}}
+          <Typography
+            variant="h3"
+            style={{
+              fontFamily: '"Handlee", cursive',
+              color: "#ba8786",
+              textAlign: "center",
+              marginTop: "30px",
+            }}
           >
             Pinch of Passion:
-            </Typography>
-          <Typography variant="h4"
-            style={{ fontFamily: '"Handlee", cursive', color: "#ba8786" ,textAlign:"center", marginTop:"30px"}}
+          </Typography>
+          <Typography
+            variant="h4"
+            style={{
+              fontFamily: '"Handlee", cursive',
+              color: "#ba8786",
+              textAlign: "center",
+              marginTop: "30px",
+            }}
           >
-            Redefining the Culinary Experience with Touchless Cooking and Recipe Storage
+            Redefining the Culinary Experience with Touchless Cooking and Recipe
+            Storage
           </Typography>
         </div>
         <Box
@@ -138,7 +152,6 @@ const Home = () => {
           </div>
 
           <br></br>
-
         </Box>
       </Typography>
     </>

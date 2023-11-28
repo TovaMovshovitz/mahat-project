@@ -4,9 +4,7 @@ import { Box, IconButton } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import Dialog from "@mui/material/Dialog";
 import { useNavigate } from "react-router-dom";
 
 function LeftButtons({ recipe, src }) {
@@ -18,7 +16,7 @@ function LeftButtons({ recipe, src }) {
     borderRadius: "50%",
     bottom: 45,
     backgroundColor: "#ba8786",
-    mb:1,
+    mb: 1,
     color: "#ffffff",
     ":hover": {
       backgroundColor: "#6f6f6f",
@@ -41,15 +39,19 @@ function LeftButtons({ recipe, src }) {
         top: "330px",
       }}
     >
-      {src=="api" && <IconButton sx={style}
-        onClick={(event) => {
-          navigate(`/editRecipe?recipeId=${recipe.id}`);
-        }}
-      >
-        <ModeEditIcon/>
-      </IconButton>}
-      
-      <IconButton sx={style}
+      {src == "api" && (
+        <IconButton
+          sx={style}
+          onClick={(event) => {
+            navigate(`/editRecipe?recipeId=${recipe.id}`);
+          }}
+        >
+          <ModeEditIcon />
+        </IconButton>
+      )}
+
+      <IconButton
+        sx={style}
         onClick={() => {
           var textField = document.createElement("textarea");
           textField.innerText =
@@ -63,7 +65,8 @@ function LeftButtons({ recipe, src }) {
       >
         <ContentCopyIcon />
       </IconButton>
-      <IconButton sx={style}
+      <IconButton
+        sx={style}
         onClick={() => {
           window.print();
         }}
