@@ -42,7 +42,6 @@ def handle_result(
             pyautogui.click()
 
 
-
 options = GestureRecognizerOptions(
     base_options=BaseOptions(
         model_asset_path="C:\\Users\\m0258\\Downloads\\gesture_recognizer.task"  # model_path
@@ -67,9 +66,9 @@ while True:
     recognition_result = recognizer.recognize_async(mp_image, frame_timestamp_ms)
 
     cv2.imshow("Virtual Mouse", frame)
-    waitKey=cv2.waitKey(100)
-    if waitKey== ord('q'):
-    		break
+    waitKey = cv2.waitKey(100)
+    if waitKey == ord("q"):
+        break
 
 cap.release()
 cv2.destroyAllWindows()
