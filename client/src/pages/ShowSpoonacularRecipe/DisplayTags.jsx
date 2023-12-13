@@ -5,7 +5,6 @@ import { Box, Chip } from "@mui/material";
 const DisplayTags = ({ tags }) => {
   return (
     <Box
-      // component={"div"}
       sx={{
         display: "flex",
         flexWrap: "wrap",

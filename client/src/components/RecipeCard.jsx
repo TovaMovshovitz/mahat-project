@@ -9,7 +9,6 @@ const RecipeCard = ({ recipe, src, deleteRecipe }) => {
     if (src == "spoonacular")
       navigate(`/spoonacular/show?recipeId=${recipe?.id}`);
     else navigate(`/Api/show?recipeId=${recipe?.id}`);
-    // navigate(`/Api/show?recipeId=1`)
   };
   const getRecipeName = () => {
     let name;
@@ -22,16 +21,16 @@ const RecipeCard = ({ recipe, src, deleteRecipe }) => {
   const getImg = (src) => {
     if (src != "api")
       return `https://spoonacular.com/recipeImages/${recipe?.id}-312x231.jpg`;
-      if (recipe.img) return `http://localhost:3600/images/${recipe.img}`;
-      return "/defultImage.jpg";
+    if (recipe.img) return `http://localhost:3600/images/${recipe.img}`;
+    return "/defultImage.jpg";
   };
   return (
     <Card
       onClick={handelClick}
       variant="outlined"
       sx={{
-        minWidth: "320px",
-        maxWidth: "320px",
+        minWidth: "328px",
+        maxWidth: "328px",
         m: 2.5,
         borderWidth: 0,
         "&:hover": { boxShadow: "6px 6px 2px 1px rgba(189, 104, 109, .2)" },
@@ -42,9 +41,7 @@ const RecipeCard = ({ recipe, src, deleteRecipe }) => {
           <img
             border="none"
             outline="none"
-            src={
-              getImg(src)
-            }
+            src={getImg(src)}
             loading="lazy"
             alt=""
             style={{ width: 312, height: 231 }}
@@ -66,7 +63,6 @@ const RecipeCard = ({ recipe, src, deleteRecipe }) => {
           display: "flex",
           gap: 1,
           py: 1.5,
-          // px: 'var(--Card-padding)',
           bgcolor: "background.level1",
         }}
       >

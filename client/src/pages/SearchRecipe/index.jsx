@@ -103,12 +103,21 @@ const SearchRecipe = ({ src }) => {
       `http://localhost:3600/api/recipe/${recipeId}`,
       config
     );
-    fetchData()
+    fetchData();
   };
 
   return (
     <>
-      <Filters where={where} setWhere={setWhere} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Filters where={where} setWhere={setWhere} />
+      </div>
+
       {noRecipes && (
         <Typography
           variant="h4"

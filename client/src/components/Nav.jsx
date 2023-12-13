@@ -172,7 +172,7 @@ export default function Nav() {
       <AppBar position="static" sx={{ backgroundColor: "#ffffff" }}>
         <Toolbar>
           <img
-            src="/logo.png" // Replace with the actual path to your logo image
+            src="/logo.png"
             alt="Logo"
             style={{ height: "80px" }}
             onClick={() => {

@@ -7,6 +7,7 @@ import {
   useTheme,
   Typography,
 } from "@mui/material";
+
 function Copyright(props) {
   return (
     <Typography
@@ -25,10 +26,9 @@ const Footer = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const theme = useTheme(); // Access the Material-UI theme
 
   const handleSendMessage = () => {
-    const toEmail = "tova67769@gmail.com"; // Replace with the actual email address to receive messages
+    const toEmail = "tova@gmail.com"; // Replace with the actual email address to receive messages
     const subject = `Message from ${name}`;
     const mailtoLink = `mailto:${toEmail}?subject=${encodeURIComponent(
       subject
@@ -49,14 +49,8 @@ const Footer = () => {
     >
       <Container>
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          {/* Left side - Logo */}
-          <img
-            src="/logo.png" // Replace with the actual path to your logo image
-            alt="Logo"
-            style={{ width: "40%" }}
-          />
+          <img src="/logo.png" alt="Logo" style={{ width: "40%" }} />
 
-          {/* Right side - Contact Us Form */}
           <Box
             display="flex"
             flexDirection="column"
@@ -95,11 +89,10 @@ const Footer = () => {
                   style={{ marginBottom: "10px", flex: 1 }}
                 />
               </Box>
-              {/* Message */}
               <TextField
                 label="Message"
                 multiline
-                rows={3} // Number of rows to display
+                rows={3}
                 variant="outlined"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}

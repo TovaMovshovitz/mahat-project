@@ -47,7 +47,10 @@ function Filters({ where, setWhere }) {
   const style = {
     multiple: true,
     limitTags: 0,
-    sx: { width: "350px" },
+    sx: {
+      minWidth: { xs: "100px", sm: "50px", md: "300px" },
+      maxWidth: "350px",
+    },
   };
 
   return (
@@ -58,7 +61,7 @@ function Filters({ where, setWhere }) {
         boxShadow: 1,
         borderRadius: 2,
         backgroundColor: "#e5d3d3",
-        width: "90%",
+        width: "80%",
         padding: 2,
         margin: 2,
       }}
@@ -125,7 +128,10 @@ function Filters({ where, setWhere }) {
               placeholder="Cook and Prep. Time"
             />
           )}
-          sx={{ width: "350px" }}
+          sx={{
+            minWidth: { xs: "100px", sm: "50px", md: "300px" },
+            maxWidth: "350px"
+          }}
           onChange={(event, value) => {
             setWhere({ ...where, maxReadyTime: value });
           }}

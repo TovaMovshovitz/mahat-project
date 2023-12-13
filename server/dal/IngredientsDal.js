@@ -3,7 +3,9 @@ const ingredient = db.ingredient;
 
 class IngredientsDal {
   getAll = async (req, res, next) => {
-    return ingredient.findAll();
+    return ingredient.findAll({
+      order: [["name", "ASC"]],
+    });
   };
 
   getOne = async (id) => {

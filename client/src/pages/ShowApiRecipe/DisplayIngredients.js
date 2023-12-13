@@ -1,15 +1,13 @@
-import { Paper, Box, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -24,20 +22,20 @@ const LightTooltip = styled(({ className, ...props }) => (
 
 const DisplayIngredients = ({ ingredients }) => {
   const [open, setOpen] = React.useState(false);
-  const [current, setCurrent] = React.useState("");
-  const [current2, setCurrent2] = React.useState([]);
+  const [currentIng, setCurrentIng] = React.useState("");
+  const [substitutes, setSubstitutes] = React.useState([]);
 
   const handleClickOpen = async (ingredient) => {
     const ans = await axios.get(
       `https://api.spoonacular.com/food/ingredients/substitutes?ingredientName=${ingredient}&apiKey=${process.env.REACT_APP_API_KEY3}`
     );
     if (ans.data.status == "success") {
-      setCurrent(ans.data.ingredient);
-      setCurrent2(ans.data.substitutes);
+      setCurrentIng(ans.data.ingredient);
+      setSubstitutes(ans.data.substitutes);
       setOpen(true);
     } else {
-      setCurrent(ans.data.message);
-      setCurrent2([]);
+      setCurrentIng(ans.data.message);
+      setSubstitutes([]);
       setOpen(true);
     }
   };
@@ -65,15 +63,20 @@ const DisplayIngredients = ({ ingredients }) => {
         {ingredients?.map((ingredient) => (
           <div>
             - &nbsp;
-            <Typography
-              component="span"
-              align="left"
-            >{`${ingredient.qty} ${ingredient.measuringUtensilName} ${ingredient.meta}`}</Typography>
+            <Typography component="span" align="left">{`${
+              ingredient.qty ? ingredient.qty : ""
+            } ${
+              ingredient.measuringUtensilName
+                ? ingredient.measuringUtensilName
+                : ""
+            } ${ingredient.meta ? ingredient.meta : ""}`}</Typography>
             <LightTooltip
               title={
                 <div>
                   <div>
-                    <img src={ingredient.ingredientImg} />
+                    <img
+                      src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.ingredientImg}`}
+                    />
                   </div>
                   <Button
                     size="small"
@@ -101,10 +104,12 @@ const DisplayIngredients = ({ ingredients }) => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle>{current}</DialogTitle>
+          <DialogTitle>{currentIng}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {current2}
+              {substitutes.map((substitute) => (
+                <p>{substitute}</p>
+              ))}
             </DialogContentText>
           </DialogContent>
         </Dialog>
