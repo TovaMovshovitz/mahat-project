@@ -1,33 +1,17 @@
 import React from "react";
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { GiSeatedMouse } from "react-icons/gi";
-import { FaRegCopy } from "react-icons/fa";
-import { BsCheckAll } from "react-icons/bs";
 
 const GuideBox = () => {
-  const [isCopied, setIsCopied] = React.useState(false);
-
   const handleDownload = () => {
     const downloadLink = document.createElement("a");
-    downloadLink.href = "virtual mouse.zip";
-    downloadLink.download = "virtual mouse.zip";
+    downloadLink.href = "virtual mouse.exe";
+    downloadLink.download = "virtual mouse.exe";
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
   };
-  const handleCopy = () => {
-    setIsCopied(true);
-    var textField = document.createElement("textarea");
-    textField.innerText = '.venv\\Scripts\\pythonw.exe "virtual mouse.py"';
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand("copy");
-    textField.remove();
-    // Reset the "copied" state after 1 second
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
-  };
+  
   return (
     <Box
       sx={{
@@ -43,7 +27,7 @@ const GuideBox = () => {
       }}
     >
       <Guideline icon={<GiSeatedMouse />} title="Download">
-        Download the files by clicking{" "}
+        Download the executable file by clicking{" "}
         <span
           style={{ fontWeight: "bold", cursor: "pointer" }}
           onClick={handleDownload}
@@ -54,38 +38,23 @@ const GuideBox = () => {
       </Guideline>
 
       <Guideline icon={<GiSeatedMouse />} title="Execute The Code">
-        Open the command line in the downloaded folder and run this command:{" "}
-        <br />
-        <b>.venv\Scripts\pythonw.exe "virtual mouse.py"</b>{" "}
-        {isCopied ? (
-          <span style={{ fontSize: 10 }}>
-            <BsCheckAll />
-            Copied!
-          </span>
-        ) : (
-          <span
-            style={{ cursor: "pointer", fontSize: 10 }}
-            onClick={handleCopy}
-          >
-            <FaRegCopy />
-            Copy
-          </span>
-        )}
+        Run the executable file you downloaded.
       </Guideline>
 
       <Guideline icon={<GiSeatedMouse />} title="Using Instructions">
-        Your virtual mouse is ready! Use hand gestures to navigate: 👍, 👎, ✌️,
+        Your virtual mouse is ready! Use hand gestures to navigate: 👍, 👎, ✊,
         ☝️
         <SubGuideline title="☝️ Pointing up">Move the mouse.</SubGuideline>
-        <SubGuideline title="✌️ Victory">Make a click.</SubGuideline>
+        <SubGuideline title="✊ Closed Fist">Make a click.</SubGuideline>
         <SubGuideline title="👍 Thumb up">Scroll up.</SubGuideline>
         <SubGuideline title="👎 Thumb down">Scroll down.</SubGuideline>
       </Guideline>
 
       {/* Stop Running Section */}
       <Guideline icon={<GiSeatedMouse />} title="Stop Running">
-        To stop, simply press the <span style={{ fontWeight: "bold" }}>q</span>{" "}
-        key at any time.
+        To stop, simply make the{" "}
+        <span style={{ fontWeight: "bold" }}>Victory gesture ✌️</span> at any
+        time.{" "}
       </Guideline>
     </Box>
   );
