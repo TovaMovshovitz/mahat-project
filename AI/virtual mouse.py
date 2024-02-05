@@ -38,8 +38,11 @@ def handle_result(
         if gesture == "Thumb_Down":
             pyautogui.scroll(-80)
 
-        if gesture == "Victory":
+        if gesture == "Closed_Fist":
             pyautogui.click()
+
+        if gesture == "Victory":
+            exit()
 
 
 options = GestureRecognizerOptions(
@@ -53,6 +56,7 @@ recognizer = GestureRecognizer.create_from_options(options)
 
 cap = cv2.VideoCapture(0)
 frame_timestamp_ms = 0
+
 while True:
     _, frame = cap.read()
     frame = cv2.flip(frame, 1)
@@ -66,9 +70,4 @@ while True:
     recognition_result = recognizer.recognize_async(mp_image, frame_timestamp_ms)
 
     cv2.imshow("Virtual Mouse", frame)
-    waitKey = cv2.waitKey(200)
-    if waitKey == ord("q"):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
+    cv2.waitKey(200)
